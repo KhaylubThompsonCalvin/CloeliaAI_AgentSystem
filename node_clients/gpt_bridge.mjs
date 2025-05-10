@@ -5,15 +5,18 @@
 // Date: 2025-05-10
 //
 // Purpose:
-//   Node.js GPT Bridge to OpenAI API with Logging.
+//   Node.js GPT Bridge to OpenAI API with Database Knowledge Injection.
 //     1. Loads environment variables securely.
-//     2. Sends a user prompt to OpenAI API.
-//     3. Returns strict JSON response with "content" field.
-//     4. Saves input/output to daily logs (logs/gpt_bridge_log_YYYY-MM-DD.json).
-//     5. Handles errors gracefully and ensures valid JSON output.
+//     2. Fetches symbolic facts from PostgreSQL.
+//     3. Enriches GPT prompt with database knowledge.
+//     4. Sends the enriched prompt to OpenAI API.
+//     5. Returns strict JSON response with "content" field.
+//     6. Saves input/output logs (logs/gpt_bridge_log_YYYY-MM-DD.json).
+//     7. Handles errors gracefully and ensures valid JSON output.
 //
 // Dependencies:
 //   - openai (npm install openai dotenv)
+//   - pg (npm install pg)
 //   - fs, path (built-in Node.js modules)
 // =============================================================================
 
@@ -21,6 +24,9 @@ import 'dotenv/config';
 import { OpenAI } from 'openai';
 import fs from 'fs';
 import path from 'path';
+import pkg from 'pg';
+
+const { Client } = pkg;
 
 // ✅ Load API Key from .env
 const apiKey = process.env.OPENAI_KEY;
@@ -42,23 +48,52 @@ if (!userInput) {
 
 // 📄 Logging Directory and Daily Log File
 const logDir = path.resolve("./logs");
-const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+const today = new Date().toISOString().split('T')[0];
 const logFile = path.join(logDir, `gpt_bridge_log_${today}.json`);
 
-// Ensure logs directory exists
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
 }
 
 /**
- * Generates a reply using OpenAI's GPT API.
+ * Fetches a symbolic fact from the PostgreSQL knowledge base.
+ *
+ * @returns {Promise<string>} A fact string to inject into the GPT prompt.
+ */
+async function fetchDatabaseFact() {
+    const client = new Client({
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT
+    });
+
+    try {
+        await client.connect();
+        const res = await client.query('SELECT key_fact FROM knowledge_base LIMIT 1;');
+        await client.end();
+        return res.rows[0]?.key_fact || "";
+    } catch (err) {
+        console.warn('⚠️ Database query failed:', err.message);
+        return "";
+    }
+}
+
+/**
+ * Generates a reply using OpenAI's GPT API with enriched knowledge from the database.
  * Handles API errors gracefully and returns strict JSON output.
  */
 async function generateReply() {
     try {
+        const dbFact = await fetchDatabaseFact();
+        const enrichedInput = dbFact
+            ? `${userInput}\n\n[Consider this fact: ${dbFact}]`
+            : userInput;
+
         const chatResponse = await openai.chat.completions.create({
-            model: "gpt-4o", // Update if using a different model
-            messages: [{ role: "user", content: userInput }],
+            model: "gpt-4o",
+            messages: [{ role: "user", content: enrichedInput }],
             max_tokens: 300,
             temperature: 0.7,
         });
@@ -72,9 +107,8 @@ async function generateReply() {
             annotations: []
         };
 
-        // ✅ Output as strict JSON for Python API to parse
         console.log(JSON.stringify(responsePayload));
-        saveLog(userInput, responsePayload);
+        saveLog(enrichedInput, responsePayload);
 
     } catch (error) {
         const message = error?.message || "Unknown API Error.";
@@ -128,4 +162,5 @@ function saveLog(input, output) {
     fs.writeFileSync(logFile, JSON.stringify(logs, null, 2), "utf-8");
 }
 
+// 🚀 Start the process
 generateReply();

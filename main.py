@@ -32,6 +32,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
+from src.utils.config import get_db_connection
+
 
 # Step 1: Load environment variables from .env
 load_dotenv()
@@ -48,6 +50,13 @@ app.mount(
     StaticFiles(directory=os.path.join("views", "static")),
     name="static"
 )
+
+app.mount(
+    "/gpt/audio",
+    StaticFiles(directory=os.path.join("static", "audio", "responses")),
+    name="gpt_audio"
+)
+
 
 # Step 4: Configure Jinja2 Templates for UI Rendering
 templates = Jinja2Templates(directory=os.path.join("views", "templates"))
@@ -115,6 +124,20 @@ async def serve_audio_file(filename: str):
     Serve generated ElevenLabs audio responses.
     """
     return await gpt_controller.serve_audio(filename)
+
+
+@app.get("/db/test", tags=["System Check"])
+def db_test():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT 1;")
+        result = cursor.fetchone()
+        conn.close()
+        return {"status": "connected", "result": result}
+    except Exception as e:
+        return {"status": "error", "details": str(e)}
+
 
 # Register GPT Router
 app.include_router(gpt_router)
