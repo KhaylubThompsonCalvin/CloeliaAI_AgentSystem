@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-05-10T03:33:18.111Z",
+    "input": "Hello, brave one",
+    "output": {
+      "role": "assistant",
+      "content": "Hello! How can I assist you today?",
+      "refusal": null,
+      "annotations": []
+    }
+  },
+  {
+    "timestamp": "2025-05-10T04:47:43.858Z",
+    "input": "Hello, brave one",
+    "output": {
+      "role": "assistant",
+      "content": "Hello! How can I assist you today?",
+      "refusal": null,
+      "annotations": []
+    }
+  }
+]

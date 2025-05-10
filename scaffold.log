@@ -1,0 +1,54 @@
+﻿2025-05-01T16:34:57	Appended package to requirements.txt: pandas
+2025-05-01T16:34:57	Appended package to requirements.txt: scikit-learn
+2025-05-01T16:34:57	Appended package to requirements.txt: networkx
+2025-05-01T16:34:57	Appended package to requirements.txt: fastapi
+2025-05-01T16:34:57	Appended package to requirements.txt: uvicorn
+2025-05-01T16:34:57	Appended package to requirements.txt: flask-cors
+2025-05-01T16:34:57	Created atlas_overview.md
+2025-05-01T16:34:57	Created test_cases.md
+2025-05-01T16:34:57	Created folder: src/controllers
+2025-05-01T16:34:57	Created folder: src/models
+2025-05-01T16:34:57	Created folder: src/utils
+2025-05-01T16:34:57	Created folder: core
+2025-05-01T16:34:57	Created folder: tests
+2025-05-01T16:34:57	Created folder: src/agents/cloelia_ai
+2025-05-01T16:34:57	Created folder: src/utils/forms
+2025-05-01T16:34:57	Created stub file: core/symbolic_graph.py
+2025-05-01T16:34:57	Created stub file: src/agents/cloelia_ai/cloelia_api.py
+2025-05-01T16:34:57	Created stub file: core/universal_algorithm.py
+2025-05-01T16:34:57	Created stub file: src/controllers/emotion_log_controller.py
+2025-05-01T16:34:58	Created stub file: src/controllers/auth_controller.py
+2025-05-01T16:34:58	Added feature package: flask-login
+2025-05-01T16:34:58	Added feature package: flask-wtf
+2025-05-01T16:34:58	Added feature package: passlib[bcrypt]
+2025-05-02T20:41:46	Created data
+2025-05-02T20:41:47	Created views/templates
+2025-05-02T20:41:47	Created views/static/css
+2025-05-02T20:41:47	Created views/static/js
+2025-05-02T20:41:47	Created views/static/images
+2025-05-02T20:41:47	Created views/static/audio
+2025-05-02T20:41:47	Created stub: src/utils/openai_client.py
+2025-05-02T20:41:47	Created stub: src/controllers/role_controller.py
+2025-05-02T20:41:47	Created stub: src/utils/elevenlabs_client.py
+2025-05-02T20:41:47	Created stub: src/utils/virtue_engine.py
+2025-05-02T20:41:47	Created stub: src/models/user_model.py
+2025-05-02T20:41:47	Created stub: src/controllers/soul_controller.py
+2025-05-02T20:41:47	Created stub: src/utils/soul_init.py
+2025-05-02T20:41:47	Created HTML template: views/templates/register.html
+2025-05-02T20:41:47	Created HTML template: views/templates/dashboard.html
+2025-05-02T20:41:47	Created HTML template: views/templates/emotion_log.html
+2025-05-02T20:41:47	Created HTML template: views/templates/role_intro.html
+2025-05-02T20:41:47	Created HTML template: views/templates/base.html
+2025-05-02T20:41:47	Created CSS stub
+2025-05-02T20:41:47	Created JS stub
+2025-05-02T20:41:47	Created media stub: views/static/images/placeholder.txt
+2025-05-02T20:41:47	Created media stub: views/static/audio/Role_Seeker.mp3
+2025-05-02T20:41:47	Created media stub: views/static/audio/Role_Strategist.mp3
+2025-05-02T20:41:47	Created media stub: views/static/audio/Class_Reveal_Intro.mp3
+2025-05-02T20:41:47	Created database.py
+2025-05-02T20:41:47	Created data file: data/virtue_db.json
+2025-05-02T20:41:47	Created data file: data/role_paths.json
+2025-05-02T20:41:48	Created data file: data/emotion_log.json
+2025-05-02T20:41:48	Created quickstart.ps1
+2025-05-02T20:42:00	Created src/utils/mailer
+2025-05-02T20:42:00	Added feature package: flask-mail

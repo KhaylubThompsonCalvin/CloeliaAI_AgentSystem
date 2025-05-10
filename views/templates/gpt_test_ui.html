@@ -1,0 +1,100 @@
+{# ================================================================================
+  File: gpt_test_ui.html
+  Project: CloeliaAI_AgentSystem
+  Author: Khaylub Thompson-Calvin
+  Date: 2025-05-10
+
+  Purpose:
+    Jinja2-compatible GPT test interface to interact with `/gpt/generate-response`.
+    - Enter a symbolic message
+    - Send to backend for GPT-4o-mini processing
+    - Display text reply and render audio player for narration
+
+  Dependencies:
+    - Extends `base.html` (layouts and CSS)
+    - `style.css` loaded via static URL
+    - Route registered under `/gpt/test`
+================================================================================ #}
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <!-- Page title and instructions -->
+    <h2 class="mb-3">🧠 Cloelia GPT Symbolic Test</h2>
+    <p class="mb-3">Enter a symbolic message below to test Cloelia's GPT-4o-mini pipeline.</p>
+
+    <!-- User input area -->
+    <textarea id="inputMessage"
+              class="form-control"
+              placeholder="e.g., What virtue opposes fear?"
+              rows="4"></textarea>
+    <button id="sendBtn"
+            onclick="sendMessage()"
+            class="btn btn-primary mt-2">
+      Send to Cloelia
+    </button>
+
+    <!-- Text response display -->
+    <div id="response"
+         class="mt-3 p-3 border rounded bg-light"></div>
+
+    <!-- Audio player placeholder -->
+    <div id="audioPlayer" class="mt-3"></div>
+  </div>
+
+  <script>
+    /**
+     * sendMessage()
+     *  - Reads the input message
+     *  - Sends POST to /gpt/generate-response
+     *  - Displays text reply and audio player
+     */
+    async function sendMessage() {
+      const msg    = document.getElementById("inputMessage").value;
+      const resp   = document.getElementById("response");
+      const player = document.getElementById("audioPlayer");
+
+      resp.innerHTML   = "⏳ Processing...";
+      player.innerHTML = "";
+
+      try {
+        const r = await fetch("/gpt/generate-response", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: msg })
+        });
+
+        if (!r.ok) {
+          const err = await r.text();
+          resp.innerHTML = `❌ Error: HTTP ${r.status} — ${err}`;
+          return;
+        }
+
+        const data = await r.json();
+
+        // show text
+        if (data.response?.text) {
+          resp.innerText = `✅ ${data.response.text}`;
+        } else {
+          resp.innerText = `⚠️ Unexpected response: ${JSON.stringify(data)}`;
+        }
+
+        // show audio player
+        if (data.response?.audio_url) {
+          player.innerHTML = `
+            <audio controls src="${data.response.audio_url}" class="mt-2">
+              Your browser does not support the audio element.
+            </audio>
+          `;
+        }
+      } catch (e) {
+        resp.innerHTML = `❌ Failed: ${e.message || e}`;
+      }
+    }
+  </script>
+{% endblock %}
+
+
+
+
