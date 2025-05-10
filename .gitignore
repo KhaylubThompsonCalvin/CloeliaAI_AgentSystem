@@ -1,63 +1,90 @@
+# =========================
 # 🗂️ Virtual Environments
+# =========================
 venv/
 .env
 .env.*
 *.env
 
-# 🗂️ Compiled Python Files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# 📦 Node Modules and Dependencies
-node_modules/
-package-lock.json
-yarn.lock
-
+# =========================
 # 📝 IDE/Editor Settings
+# =========================
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
 
-# 🔊 Dynamic Audio Files (AI Responses)
-static/audio/responses/*.mp3
+# =========================
+# 🐍 Compiled Python Files
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# 📚 Generated Logs and Data Files
+# =========================
+# 📦 Node Modules & JS Artifacts
+# =========================
+node_modules/
+package-lock.json
+yarn.lock
+
+# =========================
+# 📚 Generated Logs & Data Files
+# =========================
 src/logs/*.json
 src/logs/*.log
 
-# 🧠 AI Training and Symbolic Logs
+# 🧠 AI Knowledge & Symbolic Logs
 src/logs/proxy_mind_log.json
 src/logs/symbolic_log.json
 
-# 📦 OpenAI and ElevenLabs API Artifacts
+# 🔊 Dynamic Audio Files (AI Responses)
+static/audio/responses/*.mp3
+
+# =========================
+# 📦 API Caches & Artifacts
+# =========================
 openai/
 elevenlabs/
 *.api_cache
 
-# 📂 Build / Dist Directories
+# =========================
+# 🚀 Build / Distribution
+# =========================
 dist/
 build/
 
-# 🚀 Docker and Containers
+# =========================
+# 🐳 Docker & Containers
+# =========================
 *.dockerfile
 docker-compose.yml
 
-# 🧩 Miscellaneous Temporary Files
+# =========================
+# 🔥 Framework Caches
+# =========================
+instance/
+*.db
+
+# =========================
+# 🎮 Game Engine (Unity/Unreal)
+# =========================
+*.unitypackage
+*.uproject
+
+# =========================
+# 🧩 Miscellaneous Temp Files
+# =========================
 *.tmp
 *.bak
 .DS_Store
 Thumbs.db
 
-# 🔥 Flask and FastAPI Cache
-instance/
-*.db
-
-# 🎮 Game Engine Cache (if using Unity or Unreal)
-*.unitypackage
-*.uproject
-
-# 🧩 Database Files (Optional — uncomment if using SQLite directly)
+# =========================
+# 📄 Database Files (Optional — Uncomment if using SQLite directly)
 # *.sqlite3
+
+# =========================
+# 📄 Migrations & Schema Backups (Optional)
+migrations/*.sql
