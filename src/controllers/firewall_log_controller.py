@@ -31,13 +31,18 @@ firewall_log = APIRouter()
 # Dynamically resolve the path to the firewall log file
 # -----------------------------------------------------------------------------
 LOG_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "logs", "proxy_mind_log.json")
-)
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "logs",
+        "proxy_mind_log.json"))
 
 # -----------------------------------------------------------------------------
 # Route: GET /firewall-log
 # Description: Returns contents of Cloelia's symbolic firewall memory log
 # -----------------------------------------------------------------------------
+
+
 @firewall_log.get("/firewall-log", response_class=JSONResponse)
 def get_firewall_log():
     """

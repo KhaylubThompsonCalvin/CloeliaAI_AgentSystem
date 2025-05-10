@@ -1,3 +1,63 @@
+# 🗂️ Virtual Environments
+venv/
 .env
-.env.bak
 .env.*
+*.env
+
+# 🗂️ Compiled Python Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 📦 Node Modules and Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# 📝 IDE/Editor Settings
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# 🔊 Dynamic Audio Files (AI Responses)
+static/audio/responses/*.mp3
+
+# 📚 Generated Logs and Data Files
+src/logs/*.json
+src/logs/*.log
+
+# 🧠 AI Training and Symbolic Logs
+src/logs/proxy_mind_log.json
+src/logs/symbolic_log.json
+
+# 📦 OpenAI and ElevenLabs API Artifacts
+openai/
+elevenlabs/
+*.api_cache
+
+# 📂 Build / Dist Directories
+dist/
+build/
+
+# 🚀 Docker and Containers
+*.dockerfile
+docker-compose.yml
+
+# 🧩 Miscellaneous Temporary Files
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# 🔥 Flask and FastAPI Cache
+instance/
+*.db
+
+# 🎮 Game Engine Cache (if using Unity or Unreal)
+*.unitypackage
+*.uproject
+
+# 🧩 Database Files (Optional — uncomment if using SQLite directly)
+# *.sqlite3

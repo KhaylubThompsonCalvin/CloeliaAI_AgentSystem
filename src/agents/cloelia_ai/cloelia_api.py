@@ -1,4 +1,4 @@
-﻿# ========================================================================================
+# ========================================================================================
 # File: cloelia_api.py
 # Project: CloeliaAI_AgentSystem
 # Author: Khaylub Thompson-Calvin
@@ -22,8 +22,10 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from core.universal_engine import UniversalEngine            # Symbolic logic engine
-from database import get_connection                          # DB connection helper
-from src.utils.logger import log_symbolic_trigger                # Log symbolic insight to JSON
+# DB connection helper
+from database import get_connection
+# Log symbolic insight to JSON
+from src.utils.logger import log_symbolic_trigger
 
 # -----------------------------------------------------------
 # Initialize FastAPI router for Cloelia endpoint group
@@ -33,6 +35,8 @@ cloelia_router = APIRouter()
 # -----------------------------------------------------------
 # Data model for incoming emotion analysis requests
 # -----------------------------------------------------------
+
+
 class EmotionRequest(BaseModel):
     """
     Represents a request to analyze symbolic emotional patterns for a given user.
@@ -48,6 +52,8 @@ class EmotionRequest(BaseModel):
 # Route: GET /cloelia/
 # Description: Health check route for CI/CD and diagnostics
 # -----------------------------------------------------------
+
+
 @cloelia_router.api_route("/", methods=["GET", "HEAD"])
 def read_status():
     """
@@ -59,6 +65,8 @@ def read_status():
 # Route: POST /cloelia/analyze-emotion
 # Description: Analyze recent emotion logs for symbolic triggers
 # -----------------------------------------------------------
+
+
 @cloelia_router.post("/analyze-emotion")
 async def analyze_emotion(req: EmotionRequest):
     """
@@ -113,5 +121,3 @@ async def analyze_emotion(req: EmotionRequest):
 
     except Exception as e:
         return {"error": f"Failed to analyze emotion: {str(e)}"}
-
-

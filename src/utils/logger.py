@@ -31,7 +31,13 @@ import json
 from datetime import datetime
 
 # Dynamically resolve the full path to symbolic_log.json within src/logs/
-LOG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "logs", "symbolic_log.json"))
+LOG_FILE = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "logs",
+        "symbolic_log.json"))
+
 
 def log_symbolic_trigger(data: dict):
     """

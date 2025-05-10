@@ -21,7 +21,12 @@ from fastapi.responses import JSONResponse
 # -----------------------------------------------------------
 # Path to symbolic memory log (relative to project root)
 # -----------------------------------------------------------
-LOG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "logs", "symbolic_log.json"))
+LOG_FILE = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "logs",
+        "symbolic_log.json"))
 
 # -----------------------------------------------------------
 # FastAPI router initialization
@@ -32,6 +37,8 @@ trigger_feed = APIRouter()
 # Route: GET /trigger-feed
 # Description: Returns Cloelia’s symbolic memory log as JSON
 # -----------------------------------------------------------
+
+
 @trigger_feed.get("/trigger-feed", response_class=JSONResponse)
 def get_trigger_feed():
     """

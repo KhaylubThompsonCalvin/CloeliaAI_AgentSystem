@@ -1,1 +1,1 @@
-﻿# Initializes soul logic
+# Initializes soul logic

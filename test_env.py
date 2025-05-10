@@ -11,6 +11,3 @@ load_dotenv(dotenv_path=env_path)
 
 # Retrieve and print the ELEVENLABS_KEY
 print("🔑 ELEVENLABS_KEY =", os.getenv("ELEVENLABS_KEY"))
-
-
-

@@ -1,1 +1,1 @@
-﻿# Virtue engine logic
+# Virtue engine logic

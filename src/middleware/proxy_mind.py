@@ -30,8 +30,11 @@ from starlette.responses import JSONResponse
 # Define path to log file: stores symbolic firewall detections
 # ---------------------------------------------------------------------------
 FIREWALL_LOG = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "logs", "proxy_mind_log.json")
-)
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "logs",
+        "proxy_mind_log.json"))
 
 # ---------------------------------------------------------------------------
 # Internal rate-limiting tracker per IP
@@ -59,7 +62,8 @@ class ProxyMindMiddleware(BaseHTTPMiddleware):
         # Remove timestamps older than 60 seconds
         REQUEST_TIMES[ip] = [t for t in REQUEST_TIMES[ip] if now - t < 60]
 
-        too_frequent = len(REQUEST_TIMES[ip]) > 10  # >10 requests/min is suspicious
+        # >10 requests/min is suspicious
+        too_frequent = len(REQUEST_TIMES[ip]) > 10
 
         # Log every interaction (whether threat or not)
         self.log_event(ip, path, too_frequent)
@@ -68,10 +72,8 @@ class ProxyMindMiddleware(BaseHTTPMiddleware):
         if too_frequent:
             return JSONResponse(
                 content={
-                    "error": "Cloelia has sensed an unnatural rhythm. Delay your inquiry."
-                },
-                status_code=429
-            )
+                    "error": "Cloelia has sensed an unnatural rhythm. Delay your inquiry."},
+                status_code=429)
 
         # Continue processing request
         response = await call_next(request)

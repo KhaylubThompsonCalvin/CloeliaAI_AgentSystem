@@ -19,6 +19,12 @@
 #   uvicorn main:app --reload
 # =============================================================================
 
+from src.controllers.firewall_log_controller import firewall_log
+from src.controllers.trigger_feed_controller import trigger_feed
+from src.controllers.emotion_log_controller import emotion_log
+from src.agents.cloelia_ai.cloelia_api import cloelia_router
+from src.controllers.gpt_controller import gpt_router
+from src.middleware.proxy_mind import ProxyMindMiddleware
 import os
 import traceback
 from fastapi import FastAPI, Request, APIRouter
@@ -34,8 +40,7 @@ load_dotenv()
 app = FastAPI(
     title="Cloelia AI Agent System",
     description="Symbolic Emotional Insight API + GPT-4o-mini + ElevenLabs Audio Synthesis",
-    version="0.1.0"
-)
+    version="0.1.0")
 
 # Step 3: Mount Static Assets (CSS/JS/Audio Files)
 app.mount(
@@ -48,12 +53,13 @@ app.mount(
 templates = Jinja2Templates(directory=os.path.join("views", "templates"))
 
 # Step 5: Add Metatron-Inspired Firewall Middleware
-from src.middleware.proxy_mind import ProxyMindMiddleware
 app.add_middleware(ProxyMindMiddleware)
 
 # -----------------------------------------------------------------------------
 # Root Health Check (Hidden from OpenAPI Docs)
 # -----------------------------------------------------------------------------
+
+
 @app.get("/", include_in_schema=False)
 def root():
     """
@@ -64,6 +70,8 @@ def root():
 # -----------------------------------------------------------------------------
 # GPT Symbolic Test UI (Jinja2)
 # -----------------------------------------------------------------------------
+
+
 @app.get("/gpt/test", tags=["GPT Interface"])
 def gpt_test_ui(request: Request):
     """
@@ -84,12 +92,13 @@ def gpt_test_ui(request: Request):
             }
         )
 
+
 # -----------------------------------------------------------------------------
 # GPT Symbolic API (FastAPI Router)
 # -----------------------------------------------------------------------------
-from src.controllers.gpt_controller import gpt_router
 
 app.include_router(gpt_router, prefix="/gpt", tags=["GPT Symbolic API"])
+
 
 @gpt_router.post("/generate-response")
 async def generate_gpt_response(request: Request):
@@ -98,6 +107,7 @@ async def generate_gpt_response(request: Request):
     Calls Node.js GPT bridge and ElevenLabs audio synthesis.
     """
     return await gpt_controller.generate_response(request)
+
 
 @gpt_router.get("/audio/{filename}")
 async def serve_audio_file(filename: str):
@@ -112,20 +122,10 @@ app.include_router(gpt_router)
 # -----------------------------------------------------------------------------
 # Register All Other Routers (Modular Controllers)
 # -----------------------------------------------------------------------------
-from src.agents.cloelia_ai.cloelia_api import cloelia_router
 app.include_router(cloelia_router, prefix="/cloelia", tags=["Cloelia"])
 
-from src.controllers.emotion_log_controller import emotion_log
 app.include_router(emotion_log, prefix="/emotion", tags=["Emotion Log"])
 
-from src.controllers.trigger_feed_controller import trigger_feed
 app.include_router(trigger_feed, prefix="/trigger", tags=["Symbolic Feed"])
 
-from src.controllers.firewall_log_controller import firewall_log
 app.include_router(firewall_log, prefix="/firewall-log", tags=["Firewall Log"])
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-﻿# Writes emotion entries to PostgreSQL (cloeila_dev)
+# Writes emotion entries to PostgreSQL (cloeila_dev)
 
 # src/controllers/emotion_log_controller.py
 from fastapi import APIRouter, Request
@@ -7,11 +7,13 @@ from database import get_connection
 
 emotion_log = APIRouter()
 
+
 class EmotionEntry(BaseModel):
     user_id: int
     emotion: str
     context_note: str = None
     microexpression_img: str = None
+
 
 @emotion_log.post("/log-emotion")
 def log_emotion(entry: EmotionEntry):
@@ -28,4 +30,3 @@ def log_emotion(entry: EmotionEntry):
     conn.close()
 
     return {"message": "Emotion logged successfully."}
-

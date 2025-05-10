@@ -50,10 +50,14 @@ if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
 }
 
+/**
+ * Generates a reply using OpenAI's GPT API.
+ * Handles API errors gracefully and returns strict JSON output.
+ */
 async function generateReply() {
     try {
         const chatResponse = await openai.chat.completions.create({
-            model: "gpt-4o",  // Adjust if you’re using a different plan
+            model: "gpt-4o", // Update if using a different model
             messages: [{ role: "user", content: userInput }],
             max_tokens: 300,
             temperature: 0.7,
@@ -68,15 +72,22 @@ async function generateReply() {
             annotations: []
         };
 
+        // ✅ Output as strict JSON for Python API to parse
         console.log(JSON.stringify(responsePayload));
         saveLog(userInput, responsePayload);
 
     } catch (error) {
-        console.error('❌ OpenAI API Error:', error.message);
-        outputError(error.message);
+        const message = error?.message || "Unknown API Error.";
+        console.error('❌ OpenAI API Error:', message);
+        outputError(message);
     }
 }
 
+/**
+ * Outputs a standardized error response and exits the process.
+ *
+ * @param {string} message - Error message to log and return.
+ */
 function outputError(message) {
     const errorPayload = {
         role: "assistant",
@@ -86,10 +97,16 @@ function outputError(message) {
     };
 
     console.log(JSON.stringify(errorPayload));
-    saveLog(userInput, errorPayload);
+    saveLog(userInput || "N/A", errorPayload);
     process.exit(1);
 }
 
+/**
+ * Saves a structured log of user inputs and GPT outputs.
+ *
+ * @param {string} input - User's input message.
+ * @param {object} output - GPT or error response payload.
+ */
 function saveLog(input, output) {
     const logEntry = {
         timestamp: new Date().toISOString(),
@@ -101,8 +118,9 @@ function saveLog(input, output) {
     if (fs.existsSync(logFile)) {
         try {
             logs = JSON.parse(fs.readFileSync(logFile, "utf-8"));
+            if (!Array.isArray(logs)) logs = [];
         } catch (e) {
-            console.warn('⚠️ Could not parse existing log. Starting fresh.');
+            console.warn('⚠️ Failed to parse existing log. Starting fresh.');
         }
     }
 
@@ -111,6 +129,3 @@ function saveLog(input, output) {
 }
 
 generateReply();
-
-
-

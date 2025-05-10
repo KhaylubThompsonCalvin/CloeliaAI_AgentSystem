@@ -1,1 +1,1 @@
-﻿# OpenAI insight handler
+# OpenAI insight handler

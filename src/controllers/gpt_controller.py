@@ -30,6 +30,7 @@ from src.utils.elevenlabs_client import generate_audio
 # Create FastAPI APIRouter for GPT endpoints
 gpt_router = APIRouter()
 
+
 @gpt_router.get("/audio/{filename}")
 async def serve_audio(filename: str):
     """
@@ -41,7 +42,12 @@ async def serve_audio(filename: str):
     Returns:
         FileResponse: The MP3 audio file for download/playback.
     """
-    audio_dir = os.path.abspath(os.path.join("views", "static", "audio", "responses"))
+    audio_dir = os.path.abspath(
+        os.path.join(
+            "views",
+            "static",
+            "audio",
+            "responses"))
     audio_path = os.path.join(audio_dir, filename)
 
     if not os.path.exists(audio_path):
@@ -50,7 +56,7 @@ async def serve_audio(filename: str):
     return FileResponse(audio_path, media_type="audio/mpeg")
 
 
-@gpt_router.post("/generate-response")
+@gpt_router.post("/gpt/generate-response")
 async def generate_response(request: Request):
     """
     Handles GPT symbolic message processing and audio generation.
@@ -70,15 +76,23 @@ async def generate_response(request: Request):
         print(f"📨 Incoming Message: {user_msg}")
 
         if not user_msg:
-            raise HTTPException(status_code=400, detail="Message field is required.")
+            raise HTTPException(
+                status_code=400,
+                detail="Message field is required.")
     except Exception as e:
         traceback.print_exc()
-        raise HTTPException(status_code=400, detail=f"Invalid JSON payload: {str(e)}")
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid JSON payload: {
+                str(e)}")
 
     # 1️⃣ Call Node.js GPT Bridge
     try:
         print("🚀 Launching Node.js GPT Bridge...")
-        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+        root_dir = os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                "../../"))
 
         proc = subprocess.run(
             ["node", "node_clients/gpt_bridge.mjs", user_msg],
@@ -86,15 +100,17 @@ async def generate_response(request: Request):
             stderr=subprocess.PIPE,
             text=True,
             check=True,
-            cwd=root_dir  # Ensure correct working directory
+            encoding="utf-8",  # Explicit encoding to avoid UnicodeDecodeError
+            cwd=root_dir
         )
 
         stdout_clean = proc.stdout.strip()
         print(f"📄 Raw Subprocess Output: {stdout_clean}")
 
-        # Defensive JSON validation before parsing
-        if not stdout_clean.startswith("{") or "content" not in stdout_clean:
-            raise HTTPException(status_code=500, detail="Invalid JSON output from GPT bridge.")
+        # Validate that output is JSON and contains "content"
+        if not stdout_clean.startswith("{") or '"content"' not in stdout_clean:
+            raise HTTPException(status_code=500,
+                                detail="Invalid JSON output from GPT bridge.")
 
         reply = json.loads(stdout_clean)
         gpt_text = reply.get("content", "").strip()
@@ -105,12 +121,18 @@ async def generate_response(request: Request):
         print(f"🧠 GPT Text: {gpt_text}")
 
     except subprocess.CalledProcessError as e:
-        print(f"❌ Node.js Error: {e.stderr}")
-        raise HTTPException(status_code=500, detail=f"Node.js GPT bridge failed: {e.stderr.strip()}")
+        stderr_output = e.stderr.strip() if e.stderr else "No stderr output."
+        print(f"❌ Node.js Error: {stderr_output}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Node.js GPT bridge failed: {stderr_output}")
 
     except json.JSONDecodeError as e:
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=f"Failed to parse GPT output: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to parse GPT output: {
+                str(e)}")
 
     # 3️⃣ Generate ElevenLabs Audio
     audio_file = f"reply_{uuid.uuid4().hex[:8]}.mp3"
@@ -120,11 +142,16 @@ async def generate_response(request: Request):
         print(f"✅ Audio generated successfully: {audio_file}")
     except Exception as e:
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=f"Audio generation failed: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Audio generation failed: {
+                str(e)}")
 
-    # 4️⃣ Success Response
+    # 4️⃣ Final Response
     audio_url = f"/gpt/audio/{audio_file}"
-    print(f"📦 Final Response: text length={len(gpt_text)}, audio_url={audio_url}")
+    print(
+        f"📦 Final Response: text length={
+            len(gpt_text)}, audio_url={audio_url}")
 
     return JSONResponse(content={
         "response": {
@@ -132,5 +159,3 @@ async def generate_response(request: Request):
             "audio_url": audio_url
         }
     })
-
-

@@ -18,5 +18,47 @@
       "refusal": null,
       "annotations": []
     }
+  },
+  {
+    "timestamp": "2025-05-10T05:24:57.608Z",
+    "input": "Hello, brave one",
+    "output": {
+      "role": "assistant",
+      "content": "",
+      "refusal": "API_ERROR",
+      "annotations": [
+        {
+          "error": "401 Incorrect API key provided: sk-proj-********************************************************************************************************************************************************HgYA. You can find your API key at https://platform.openai.com/account/api-keys."
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-05-10T05:33:44.650Z",
+    "input": "Hello, brave one",
+    "output": {
+      "role": "assistant",
+      "content": "",
+      "refusal": "API_ERROR",
+      "annotations": [
+        {
+          "error": "401 Incorrect API key provided: sk-proj-********************************************************************************************************************************************************HgYA. You can find your API key at https://platform.openai.com/account/api-keys."
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-05-10T05:39:05.222Z",
+    "input": "Hello, brave one",
+    "output": {
+      "role": "assistant",
+      "content": "",
+      "refusal": "API_ERROR",
+      "annotations": [
+        {
+          "error": "401 Incorrect API key provided: sk-proj-********************************************************************************************************************************************************HgYA. You can find your API key at https://platform.openai.com/account/api-keys."
+        }
+      ]
+    }
   }
 ]

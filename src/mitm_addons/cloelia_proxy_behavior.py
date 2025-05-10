@@ -24,7 +24,13 @@ from datetime import datetime
 from mitmproxy import http
 
 # Path to store symbolic proxy logs
-LOG_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "logs", "proxy_symbolic_emotion_log.json"))
+LOG_PATH = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "logs",
+        "proxy_symbolic_emotion_log.json"))
+
 
 def log_result(entry):
     os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
@@ -38,6 +44,7 @@ def log_result(entry):
 
     with open(LOG_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
+
 
 def request(flow: http.HTTPFlow) -> None:
     """
@@ -53,7 +60,9 @@ def request(flow: http.HTTPFlow) -> None:
                 "emotion": headers["X-Symbolic-Emotion"]
             }
 
-            response = requests.post("http://127.0.0.1:8000/cloelia/analyze-emotion", json=payload)
+            response = requests.post(
+                "http://127.0.0.1:8000/cloelia/analyze-emotion",
+                json=payload)
             symbolic_result = response.json()
 
             log_entry = {

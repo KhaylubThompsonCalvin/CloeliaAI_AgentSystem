@@ -1,10 +1,11 @@
-﻿# ========================================================================================
+# ========================================================================================
 # File: universal_engine.py
 # Purpose: Symbolic detection engine that analyzes recent user emotion logs and determines
 # if a symbolic action should trigger. Matches emotion → virtue, and logs the trigger.
 # ========================================================================================
 
 from datetime import datetime, timedelta
+
 
 class UniversalEngine:
     def __init__(self, db_conn):

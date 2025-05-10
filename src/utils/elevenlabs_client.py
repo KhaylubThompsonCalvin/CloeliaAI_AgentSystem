@@ -1,4 +1,4 @@
-﻿# ====================================================================================
+# ====================================================================================
 # File: elevenlabs_client.py
 # Project: CloeliaAI_AgentSystem
 # Author: Khaylub Thompson-Calvin
@@ -40,11 +40,17 @@ if not ELEVEN_KEY:
 # 3. Default voice ID (you can override via env or function arg)
 #    - You can find your voice IDs via GET /v1/voices
 # -------------------------------------------------------------------
-DEFAULT_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "EXAVITQu4vr4xnSDxMaL")  # e.g. Rachel
+DEFAULT_VOICE_ID = os.getenv(
+    "ELEVENLABS_VOICE_ID",
+    "EXAVITQu4vr4xnSDxMaL")  # e.g. Rachel
 
 BASE_URL = "https://api.elevenlabs.io/v1"
 
-def generate_audio(text: str, filename: str = "response.mp3", voice_id: str = None) -> str:
+
+def generate_audio(
+        text: str,
+        filename: str = "response.mp3",
+        voice_id: str = None) -> str:
     """
     Convert input text to speech via ElevenLabs and save as MP3.
 
@@ -88,6 +94,7 @@ def generate_audio(text: str, filename: str = "response.mp3", voice_id: str = No
 
     return out_path
 
+
 # -------------------------------------------------------------------
 # Manual test when run as a script
 # -------------------------------------------------------------------
@@ -100,10 +107,3 @@ if __name__ == "__main__":
         print(f"✅ Audio saved to: {out}")
     except Exception as e:
         print(f"❌ Failed to generate audio: {e}")
-
-
-
-
-
-
-

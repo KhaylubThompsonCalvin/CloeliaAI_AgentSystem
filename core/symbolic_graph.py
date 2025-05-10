@@ -1,11 +1,12 @@
-﻿#---------------------------------------------------------------
+# ---------------------------------------------------------------
 # Module: symbolic_graph.py
 # Location: core/
 # Purpose: Defines Metatron’s Cube-based logic engine using
 #          NetworkX. Nodes = emotions, virtues, and symbolic traits.
-#---------------------------------------------------------------
+# ---------------------------------------------------------------
 
 import networkx as nx
+
 
 class MetatronGraph:
     def __init__(self):
@@ -14,8 +15,20 @@ class MetatronGraph:
 
     def _build_base_cube(self):
         # Nodes: 6 emotions + center + 6 virtues (as a starting set)
-        emotions = ['anger', 'fear', 'disgust', 'sadness', 'surprise', 'happiness']
-        virtues = ['patience', 'courage', 'empathy', 'resilience', 'focus', 'compassion']
+        emotions = [
+            'anger',
+            'fear',
+            'disgust',
+            'sadness',
+            'surprise',
+            'happiness']
+        virtues = [
+            'patience',
+            'courage',
+            'empathy',
+            'resilience',
+            'focus',
+            'compassion']
 
         # Add nodes
         for e in emotions:
@@ -46,12 +59,14 @@ class MetatronGraph:
 
     def get_path(self, from_node, to_node):
         try:
-            return nx.shortest_path(self.graph, source=from_node, target=to_node)
+            return nx.shortest_path(
+                self.graph, source=from_node, target=to_node)
         except nx.NetworkXNoPath:
             return []
 
     def visualize(self):
         import matplotlib.pyplot as plt
-        color_map = ['red' if self.graph.nodes[n]['type'] == 'emotion' else 'blue' for n in self.graph.nodes]
+        color_map = ['red' if self.graph.nodes[n]['type'] ==
+                     'emotion' else 'blue' for n in self.graph.nodes]
         nx.draw(self.graph, with_labels=True, node_color=color_map)
         plt.show()

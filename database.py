@@ -1,4 +1,4 @@
-﻿# ========================================================================================
+# ========================================================================================
 # File: database.py
 # Purpose: PostgreSQL connection helper for the CloeliaAI Agent System
 # Note: Uses psycopg2 + dotenv for secure configuration
@@ -9,6 +9,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
 
 def get_connection():
     return psycopg2.connect(

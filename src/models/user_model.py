@@ -1,1 +1,1 @@
-﻿# MongoDB User model
+# MongoDB User model

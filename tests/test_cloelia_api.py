@@ -16,7 +16,7 @@ headers = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {API_KEY}"
 }
-payload = { "emotion": "focus" }
+payload = {"emotion": "focus"}
 
 try:
     response = requests.post(url, headers=headers, json=payload)

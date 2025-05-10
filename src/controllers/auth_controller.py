@@ -1,4 +1,4 @@
-﻿# Auth Controller (Auth feature)
+# Auth Controller (Auth feature)
 # Routes: /login, /register, /logout
 # Uses flask-login and passlib for password hashing.
 # src/controllers/auth_controller.py
@@ -11,6 +11,7 @@ from src.database import db  # SQLAlchemy object
 
 auth = Blueprint("auth", __name__)
 
+
 @auth.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
@@ -22,6 +23,7 @@ def register():
     db.session.commit()
     return jsonify({"message": "Registered successfully"})
 
+
 @auth.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -30,6 +32,7 @@ def login():
         login_user(user)
         return jsonify({"message": "Login successful"})
     return jsonify({"error": "Invalid credentials"}), 401
+
 
 @auth.route("/logout", methods=["POST"])
 @login_required

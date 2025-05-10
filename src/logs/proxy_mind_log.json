@@ -574,5 +574,35 @@
         "ip": "127.0.0.1",
         "path": "/gpt/generate-response",
         "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T05:24:57.243326",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T05:33:20.688585",
+        "ip": "127.0.0.1",
+        "path": "/",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T05:33:44.271211",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T05:39:04.887231",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T05:59:36.606487",
+        "ip": "127.0.0.1",
+        "path": "/",
+        "threat_detected": false
     }
 ]

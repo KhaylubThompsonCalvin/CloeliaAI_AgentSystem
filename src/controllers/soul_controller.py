@@ -1,1 +1,1 @@
-﻿# Soul system routes
+# Soul system routes
