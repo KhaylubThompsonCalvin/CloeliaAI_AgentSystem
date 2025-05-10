@@ -730,5 +730,125 @@
         "ip": "127.0.0.1",
         "path": "/gpt/audio/reply_9c951a2d.mp3",
         "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T14:56:29.552316",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:00:18.056021",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:15:07.581092",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:18:26.873433",
+        "ip": "127.0.0.1",
+        "path": "/gpt/test",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:18:26.949170",
+        "ip": "127.0.0.1",
+        "path": "/static/css/style.css",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:20:57.447028",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:21:55.344874",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:22:07.503909",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:22:27.449484",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:22:35.471746",
+        "ip": "127.0.0.1",
+        "path": "/gpt/audio/reply_426f4971.mp3",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:22:38.508203",
+        "ip": "127.0.0.1",
+        "path": "/favicon.ico",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:22:38.889368",
+        "ip": "127.0.0.1",
+        "path": "/gpt/audio/reply_426f4971.mp3",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:23:23.258623",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:23:51.042943",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:25:28.958711",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:27:41.710711",
+        "ip": "127.0.0.1",
+        "path": "/gpt/audio/reply_a4ea7bd4.mp3",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:27:41.742525",
+        "ip": "127.0.0.1",
+        "path": "/gpt/audio/reply_a4ea7bd4.mp3",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:27:41.786072",
+        "ip": "127.0.0.1",
+        "path": "/favicon.ico",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:29:35.948250",
+        "ip": "127.0.0.1",
+        "path": "/gpt/generate-response",
+        "threat_detected": false
+    },
+    {
+        "timestamp": "2025-05-10T15:30:05.185999",
+        "ip": "127.0.0.1",
+        "path": "/gpt/test",
+        "threat_detected": false
     }
 ]

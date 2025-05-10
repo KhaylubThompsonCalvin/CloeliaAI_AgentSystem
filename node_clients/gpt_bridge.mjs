@@ -20,7 +20,7 @@
 //   - fs, path (built-in Node.js modules)
 // =============================================================================
 
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import { OpenAI } from 'openai';
 import fs from 'fs';
 import path from 'path';
@@ -28,17 +28,28 @@ import pkg from 'pg';
 
 const { Client } = pkg;
 
-// ✅ Load API Key from .env
-const apiKey = process.env.OPENAI_KEY;
+// ✅ Dynamically Resolve .env Location Regardless of Execution Context
+const possibleEnvPaths = [
+    path.resolve("../.env"),
+    path.resolve("../../.env"),
+    path.resolve("../../../.env"),
+    path.resolve("./.env"),
+];
 
-if (!apiKey) {
-    console.error('❌ Missing OPENAI_KEY in .env');
-    outputError("Missing API Key");
+let envLoaded = false;
+for (const envPath of possibleEnvPaths) {
+    if (fs.existsSync(envPath)) {
+        dotenv.config({ path: envPath });
+        envLoaded = true;
+        break;
+    }
 }
 
-const openai = new OpenAI({ apiKey });
+if (!envLoaded) {
+    console.warn("⚠️ .env file not found. Continuing with system environment variables.");
+}
 
-// ✅ Extract User Input from Command Line
+// ✅ Extract User Input Early to Avoid Reference Errors
 const userInput = process.argv.slice(2).join(' ').trim();
 
 if (!userInput) {
@@ -46,18 +57,28 @@ if (!userInput) {
     outputError("Empty user input.");
 }
 
-// 📄 Logging Directory and Daily Log File
+// 📄 Setup Logging Paths
 const logDir = path.resolve("./logs");
 const today = new Date().toISOString().split('T')[0];
 const logFile = path.join(logDir, `gpt_bridge_log_${today}.json`);
 
 if (!fs.existsSync(logDir)) {
-    fs.mkdirSync(logDir);
+    fs.mkdirSync(logDir, { recursive: true });
 }
+
+// ✅ Validate Required Environment Variables Before Proceeding
+const REQUIRED_ENV_VARS = ['OPENAI_KEY', 'DB_USER', 'DB_HOST', 'DB_NAME', 'DB_PASSWORD', 'DB_PORT'];
+for (const key of REQUIRED_ENV_VARS) {
+    if (!process.env[key]) {
+        console.error(`❌ Missing environment variable: ${key}`);
+        outputError(`Missing environment variable: ${key}`);
+    }
+}
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY });
 
 /**
  * Fetches a symbolic fact from the PostgreSQL knowledge base.
- *
  * @returns {Promise<string>} A fact string to inject into the GPT prompt.
  */
 async function fetchDatabaseFact() {
@@ -66,12 +87,12 @@ async function fetchDatabaseFact() {
         host: process.env.DB_HOST,
         database: process.env.DB_NAME,
         password: process.env.DB_PASSWORD,
-        port: process.env.DB_PORT
+        port: parseInt(process.env.DB_PORT),
     });
 
     try {
         await client.connect();
-        const res = await client.query('SELECT key_fact FROM knowledge_base LIMIT 1;');
+        const res = await client.query('SELECT key_fact FROM knowledge_base ORDER BY RANDOM() LIMIT 1;');
         await client.end();
         return res.rows[0]?.key_fact || "";
     } catch (err) {
@@ -81,8 +102,7 @@ async function fetchDatabaseFact() {
 }
 
 /**
- * Generates a reply using OpenAI's GPT API with enriched knowledge from the database.
- * Handles API errors gracefully and returns strict JSON output.
+ * Generates a symbolic reply using OpenAI's API with optional DB fact injection.
  */
 async function generateReply() {
     try {
@@ -118,8 +138,7 @@ async function generateReply() {
 }
 
 /**
- * Outputs a standardized error response and exits the process.
- *
+ * Outputs a standardized error response and exits.
  * @param {string} message - Error message to log and return.
  */
 function outputError(message) {
@@ -136,10 +155,9 @@ function outputError(message) {
 }
 
 /**
- * Saves a structured log of user inputs and GPT outputs.
- *
- * @param {string} input - User's input message.
- * @param {object} output - GPT or error response payload.
+ * Saves structured logs of user inputs and API responses.
+ * @param {string} input - The input message from the user.
+ * @param {object} output - The final response or error payload.
  */
 function saveLog(input, output) {
     const logEntry = {
@@ -153,7 +171,7 @@ function saveLog(input, output) {
         try {
             logs = JSON.parse(fs.readFileSync(logFile, "utf-8"));
             if (!Array.isArray(logs)) logs = [];
-        } catch (e) {
+        } catch {
             console.warn('⚠️ Failed to parse existing log. Starting fresh.');
         }
     }
@@ -162,5 +180,7 @@ function saveLog(input, output) {
     fs.writeFileSync(logFile, JSON.stringify(logs, null, 2), "utf-8");
 }
 
-// 🚀 Start the process
+// 🚀 Execute Main Logic
 generateReply();
+
+
