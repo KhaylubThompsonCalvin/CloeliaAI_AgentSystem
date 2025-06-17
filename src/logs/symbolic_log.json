@@ -1,0 +1,18 @@
+[
+    {
+        "timestamp": "2025-05-08T23:54:50.770293",
+        "user_id": 1,
+        "emotion": "anger",
+        "virtue": "patience",
+        "action": "reflection_prompt",
+        "trigger_id": 4
+    },
+    {
+        "timestamp": "2025-05-09T00:41:40.589869",
+        "user_id": 1,
+        "emotion": "anger",
+        "virtue": "patience",
+        "action": "reflection_prompt",
+        "trigger_id": 5
+    }
+]

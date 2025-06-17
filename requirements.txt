@@ -1,0 +1,30 @@
+﻿# === Web Frameworks ===
+fastapi
+uvicorn
+flask
+flask-cors
+flask-login
+flask-wtf
+flask-mail
+gunicorn
+
+# === Database & Auth ===
+psycopg2-binary          # PostgreSQL driver
+passlib[bcrypt]          # Secure password hashing
+python-dotenv            # .env support
+
+# === AI & API Integration ===
+openai
+elevenlabs
+requests
+
+# === Data & Logic Tools ===
+pandas
+scikit-learn
+networkx
+matplotlib               # Optional: for symbolic graph visualization
+python-multipart         # Needed for form/file handling (FastAPI)
+email-validator          # Required for WTForms EmailField validation
+
+# === Removed (no longer needed) ===
+# flask-pymongo          # ❌ MongoDB removed in PostgreSQL refactor

@@ -1,0 +1,122 @@
+﻿/**
+ * File: style.css
+ * Project: CloeliaAI_AgentSystem
+ * Author: Khaylub Thompson-Calvin
+ * Date: 2025-05-10
+ *
+ * Purpose:
+ *   Base typography, responsive tweaks, and placeholders for future styles.
+ *   – Sets a clean font, padding, and makes cards/audio fluid on small screens.
+ *   – Sections for theme colors, utilities, components, forms, and animations.
+ */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+
+   body {
+    /* Use a modern, legible system UI font */
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 1rem;
+    background-color: #fdfdfd; /* Light background */
+    color: #333;               /* Dark text for contrast */
+  }
+
+  /* ==========================================================================
+     2. Theme Colors (define your brand palette here)
+     ========================================================================== */
+
+  /* :root {
+    --color-primary: #4caf50;
+    --color-secondary: #ff9800;
+    --color-accent: #2196f3;
+    --color-bg: #f9f9f9;
+    --color-text: #212121;
+  } */
+
+  /* ==========================================================================
+     3. Utility Classes
+     ========================================================================== */
+
+  /* .text-center { text-align: center; }
+     .mt-1 { margin-top: 0.25rem; }
+     .mb-1 { margin-bottom: 0.25rem; }
+     .p-1  { padding: 0.25rem; }
+     // Add more spacing, typography, display utilities as needed
+  */
+
+  /* ==========================================================================
+     4. Components
+     ========================================================================== */
+
+  /* Dashboard Card */
+  .dashboard-card {
+    display: flex;
+    gap: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1rem;
+  }
+
+  /* Button Styles */
+  /* .btn-custom {
+    background-color: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+  }
+  .btn-custom:hover {
+    opacity: 0.9;
+  } */
+
+  /* ==========================================================================
+     5. Forms & Inputs
+     ========================================================================== */
+
+  /* textarea, input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  } */
+
+  /* ==========================================================================
+     6. Media Queries
+     ========================================================================== */
+
+  /* On narrow viewports, stack dashboard cards and make audio full-width */
+  @media (max-width: 768px) {
+    .dashboard-card {
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    audio {
+      width: 100%;
+    }
+  }
+
+  /* Future breakpoints */
+  /* @media (min-width: 769px) and (max-width: 1024px) {
+     // tablet-specific tweaks
+  }
+  @media (min-width: 1025px) {
+     // desktop-specific tweaks
+  } */
+
+  /* ==========================================================================
+     7. Animations (optional)
+     ========================================================================== */
+
+  /* .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  } */
